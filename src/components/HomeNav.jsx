@@ -48,29 +48,29 @@ function HomeNav() {
         </div>
         <div className="md:hidden" onClick={handleClick}>
           {!nav ? (
-            <MenuIcon className="w-5" />
+            <MenuIcon className="w-8 mr-4" />
           ) : (
-            <FaTimesCircle className="w-5" />
+            <FaTimesCircle size={25} className="w-16" />
           )}
         </div>
       </div>
 
       <ul className={!nav ? "hidden" : "absolute bg-zinc-200 w-full px-8"}>
-        <li className="border-b-2 border-zinc-300 w-full">Accueil</li>
-        <li className="border-b-2 border-zinc-300 w-full">Contact</li>
-        <li className="border-b-2 border-zinc-300 w-full">Support</li>
+          <li className="border-b-2 border-zinc-300 w-full">Accueil</li>
+          <li className="border-b-2 border-zinc-300 w-full">Contact</li>
+          <li className="border-b-2 border-zinc-300 w-full">Support</li>
         <div className="flex flex-col my-4">
           <button
             onClick={GotoRegister}
-            className="px-8 text-white border bg-red-600 border-red-600
-        hover:bg-red-800 capitalize rounded-md py-3"
+            className="px-8 text-white border bg-red-600  border-red-600
+        hover:bg-red-800 capitalize rounded-md py-3 my-2 "
           >
             s'inscrire
           </button>
           <button
             onClick={GotoLogin}
-            className="px-8 text-white border bg-red-600 border-red-600
-        hover:bg-red-800 capitalize rounded-md py-3"
+            className="px-8 bg-white text-red-600 border border-red-600
+        hover:bg-red-800 hover:text-white capitalize rounded-md py-3 my-2"
           >
             se connecter
           </button>

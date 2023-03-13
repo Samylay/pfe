@@ -21,10 +21,7 @@ const Update = () => {
     window.location.href = "/test/users";
   }
 
-
-
-
-
+  let end = false;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -40,8 +37,21 @@ const Update = () => {
         "lastname": lastname
     }
 
-    request(`/users/${id}` , "PUT" , token , reqbody )
-        .then( window.location.href = '/test/users')
+    // request( , "PUT" , token , reqbody )
+    //   .then(end = true)
+    // end ? window.location.href = '/test/users' : console.log('popo')
+
+
+          fetch(`/users/${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            method: "PUT",
+            body: JSON.stringify(reqbody),
+          }).then((response) => {
+            if (response.status === 200) window.location.href = "/test/users";
+          });
 
   }
   const [token, setToken] = useLocalState("", "token");
