@@ -41,7 +41,7 @@ const UserProfile = () => {
         onClose={() => setIsModalOpen(false)}
       />
       <div className="z-10 absolute right-1 top-16 bg-white p-8 rounded-lg w-80">
-        <div className="flex justify-between items-center z-20">
+        <div className="flex justify-between items-center">
           <p className="font-semibold text-lg text-gray-800">Profile</p>
 
           <button

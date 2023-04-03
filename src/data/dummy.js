@@ -32,6 +32,7 @@ export const adminLinks = [
     title: "Indicateurs",
     links: [
       {
+        goto:"dashboard/KPI",
         name: "nom kpi 1",
         icon: <AiOutlineStock />,
       },

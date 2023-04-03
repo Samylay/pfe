@@ -10,12 +10,13 @@ import DashBoard from "./DashBoard";
 import Sidebar from "./Sidebar";
 import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "./ChatSystem";
+import KPI from "./KPI";
 
 export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
 
   return (
-    <div className="flex relative w-full bg-red-300">
+    <div className="flex relative w-full h-full">
         {activeMenu && <Sidebar />}
         <ChatSystem />
         <div
@@ -35,6 +36,14 @@ export default function AdminDashboard() {
                 element={
                   <PrivateRoute>
                     <DashBoard />
+                  </PrivateRoute>
+                }
+              ></Route>
+              <Route
+                path="/KPI"
+                element={
+                  <PrivateRoute>
+                    <KPI />
                   </PrivateRoute>
                 }
               ></Route>
@@ -63,7 +72,7 @@ export default function AdminDashboard() {
                 }
               ></Route>
             </Routes>
-            ;
+            
           </div>
         </div>
     </div>
