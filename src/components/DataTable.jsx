@@ -1,56 +1,70 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "./../util/useLocalStorage";
 import DeleteUserModal from "./DeleteUserModal";
 
 function DataTable() {
   const [selected, setSelected] = useState(null);
-
   const [token, setToken] = useLocalState("", "token");
-
-  useEffect(() => {
-    fetch("/users", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-      })
-      .then((userData) => {
-        setUsers(userData);
-      });
-  }, []);
-
-  // Define initial state for users
   const [users, setUsers] = useState([]);
 
-  const handleDeleteClick = (id) => {
-    fetch(`/users/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("/users", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          method: "GET",
+        });
 
-      method: "DELETE",
-    }).then((response) => {
-      window.location.href = "users";
-    });
-  };
+        if (response.status === 200) {
+          const userData = await response.json();
+          setUsers(userData);
+        } else {
+          throw new Error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // Define state for search query
-  const [searchQuery, setSearchQuery] = useState("");
+    fetchUsers();
+  }, [token]);
 
-  // Define function to filter users by username
-  const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  const handleDeleteClick = useCallback(
+    (id) => {
+      fetch(`/users/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        method: "DELETE",
+      }).then((response) => {
+        if (response.status === 200) {
+          setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+        } else {
+          console.error("Failed to delete user");
+        }
+      });
+    },
+    [token]
   );
 
-  function handleUpdateClick(id) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredUsers = useMemo(
+    () =>
+      users.filter((user) =>
+        user.username.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [users, searchQuery]
+  );
+
+  const handleUpdateClick = useCallback((id) => {
     window.location.href = `update/${id}`;
-  }
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -59,20 +73,21 @@ function DataTable() {
       <DeleteUserModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        Delete={() => handleDeleteClick(selected)}
+        onDelete={() => {
+          handleDeleteClick(selected);
+          setIsModalOpen(false);
+        }}
       />
-
       <div className="relative mx-4 my-2 mb-10">
         <input
           type="text"
           placeholder="Search by username"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:ring-opacity-50"
+          className="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:ring-opacity-50"
         />
-          <SearchIcon className="h-5 w-5 absolute top-[10px] left-3 text-gray-400" />
+        <SearchIcon className="h-5 w-5 absolute top-[10px] left-3 text-gray-400" />
       </div>
-
       <div className="flex-grow overflow-auto">
         <table className="min-w-full divide-y divide-gray-400">
           <thead className="bg-gray-90">
@@ -89,7 +104,6 @@ function DataTable() {
               >
                 Nom d'utilisateur
               </th>
-
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -110,14 +124,13 @@ function DataTable() {
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-w"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Role
               </th>
-
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-w"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Actions
               </th>
@@ -133,7 +146,6 @@ function DataTable() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {user.username}
                 </td>
-
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {user.firstname}
                 </td>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/djezzy.png";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { MenuIcon } from "@heroicons/react/outline";
 import { FaTimesCircle } from "react-icons/fa";
 
 function HomeNav() {
@@ -21,17 +21,17 @@ function HomeNav() {
           <img className=" h-14 w-12 mr-4 ml-2 " src={logo} alt="djeezy logo" />
           <ul className="hidden md:flex font-bold ml-5">
             <li>
-              <button className="hover:bg-neutral-300 rounded-lg p-3">
+              <button className="text-gray-800 hover:bg-neutral-300 rounded-lg p-3">
                 Accueil
               </button>
             </li>
             <li>
-              <button className="hover:bg-neutral-300 rounded-lg p-3">
+              <button className="text-gray-800 hover:bg-neutral-300 rounded-lg p-3">
                 Contact
               </button>
             </li>
             <li>
-              <button className="hover:bg-neutral-300 rounded-lg p-3">
+              <button className="text-gray-800 hover:bg-neutral-300 rounded-lg p-3">
                 Support
               </button>
             </li>
@@ -56,9 +56,9 @@ function HomeNav() {
       </div>
 
       <ul className={!nav ? "hidden" : "absolute bg-zinc-200 w-full px-8"}>
-          <li className="border-b-2 border-zinc-300 w-full">Accueil</li>
-          <li className="border-b-2 border-zinc-300 w-full">Contact</li>
-          <li className="border-b-2 border-zinc-300 w-full">Support</li>
+        <li className="border-b-2 border-zinc-300 w-full my-2">Accueil</li>
+        <li className="border-b-2 border-zinc-300 w-full my-2">Contact</li>
+        <li className="border-b-2 border-zinc-300 w-full my-2">Support</li>
         <div className="flex flex-col my-4">
           <button
             onClick={GotoRegister}

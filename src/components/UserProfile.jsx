@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 
 import user from "../data/user.jpg";
-import Button from "./Button";
 import LogoutButton from "./LogoutButton";
 import jwt_decode from "jwt-decode";
 import { useLocalState } from "../util/useLocalStorage";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const UserProfile = () => {
   const [token, setToken] = useLocalState("", "token");
@@ -32,6 +32,7 @@ const UserProfile = () => {
     }
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setisClicked, initialState } = useStateContext();
 
   return (
     <div>
@@ -39,28 +40,31 @@ const UserProfile = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      <div className="z-10 absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
+      <div className="z-10 absolute right-1 top-16 bg-white p-8 rounded-lg w-80">
         <div className="flex justify-between items-center">
-          <p className="font-semibold text-lg dark:text-gray-200">Profile</p>
-          <Button
-            icon={<MdOutlineCancel />}
-            color="rgb(153, 171, 180)"
-            bgHoverColor="light-gray"
-            size="2xl"
-            borderRadius="50%"
-          />
+          <p className="font-semibold text-lg text-gray-800">Profile</p>
+
+          <button
+            onClick={() =>
+              setisClicked({
+                userProfile: false,
+              })
+            }
+            type="button"
+            className={`text-2xl text-gray-800 py-2 pl-3 w-1/6 rounded-lg hover:drop-shadow-xl hover:bg-gray-100`}
+          >
+            <MdOutlineCancel />
+          </button>
         </div>
         <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
           <img
-            className="rounded-full h-24 w-24"
+            className="rounded-full h-20 w-20"
             src={user}
             alt="user-profile"
           />
           <div>
-            <p className="font-semibold text-xl dark:text-gray-200"> {name} </p>
-            <p className="text-gray-500 text-sm dark:text-gray-400">
-              {role.substring(5)}
-            </p>
+            <p className="font-semibold text-xl text-gray-800"> {name} </p>
+            <p className="text-gray-800 text-sm ">{role.substring(5)}</p>
           </div>
         </div>
 

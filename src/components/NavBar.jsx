@@ -19,7 +19,16 @@ function NavBar() {
     screenSize,
     setScreenSize,
   } = useStateContext();
-  useStateContext();
+
+  const [token, setToken] = useLocalState("", "token");
+  const [name, setName] = useState(getNameFromToken());
+
+  function getNameFromToken() {
+    if (token && token.length > 50) {
+      const decodeToken = jwt_decode(token);
+      return decodeToken.firstname;
+    }
+  }
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -29,23 +38,9 @@ function NavBar() {
   }, []);
 
   useEffect(() => {
-    if (screenSize <= 900) {
-      setActiveMenu(false);
-    } else {
-      setActiveMenu(true);
-    }
+    setActiveMenu(screenSize > 900);
   }, [screenSize]);
-  const [token, setToken] = useLocalState("", "token");
-  const [name, setName] = useState(getNameFromToken());
 
-  function getNameFromToken() {
-    if (token) {
-      if (token.length > 50) {
-        const decodeToken = jwt_decode(token);
-        return decodeToken.firstname;
-      }
-    }
-  }
   const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
     <TooltipComponent content={title} position="BottomCenter">
       <button
@@ -64,12 +59,14 @@ function NavBar() {
   );
 
   return (
-    <div className="flex justify-between p-2 md:mx-6 relative">
+    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20">
       <NavButton
         title="Menu"
         customFunc={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
         color="red"
-        icon={<AiOutlineMenu />}
+        icon={<AiOutlineMenu size={25} />}
+        dotColor=""
+
       />
 
       <div className="flex">
@@ -78,11 +75,15 @@ function NavBar() {
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
             onClick={() => handleClick("userProfile")}
           >
-            <img className="rounded-full w-10 h-10" src={user} />
+            <img
+              className="rounded-full w-10 h-10"
+              src={user}
+              alt="User profile"
+            />
             <p>
-              <span className="text-black  ml-1 text-xl">{name}</span>
+              <span className="text-black ml-1 text-xl">{name}</span>
             </p>
-            <MdKeyboardArrowDown className="text-gray-400 text-14" />
+            <MdKeyboardArrowDown className="text-gray-800 arrow-icon" />
           </div>
         </TooltipComponent>
         {isClicked.userProfile && <UserProfile />}

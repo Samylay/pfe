@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/djezzy.png";
-import { useStateContext } from "../contexts/ContextProvider";
 import { useLocalState } from "../util/useLocalStorage";
 
 function Register() {
@@ -8,6 +7,7 @@ function Register() {
     username: "",
     firstName: "",
     lastName: "",
+    email: "",
     phoneNumber: "",
     dateOfBirth: "",
     password: "",
@@ -17,7 +17,6 @@ function Register() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [role, setRole] = useState("");
-
 
   const handleChange = (event) => {
     setRegisterFormData({
@@ -36,11 +35,12 @@ function Register() {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-    const roles = role === "admin" ? "ROLE_ADMIN" : "ROLE_USER";
+      const roles = role === "admin" ? "ROLE_ADMIN" : "ROLE_USER";
 
       const reqBody = {
         username: registerFormData.username,
         password: registerFormData.password,
+        email: registerFormData.email,
         roles: roles,
         firstname: registerFormData.firstName,
         number: registerFormData.phoneNumber,
@@ -59,7 +59,19 @@ function Register() {
         if (response.status === 200) window.location.href = "users";
       });
     }
-  }, [formErrors]);
+  }, [
+    formErrors,
+    isSubmit,
+    registerFormData.dateOfBirth,
+    registerFormData.email,
+    registerFormData.firstName,
+    registerFormData.lastName,
+    registerFormData.password,
+    registerFormData.phoneNumber,
+    registerFormData.username,
+    role,
+    token,
+  ]);
 
   const validate = () => {
     const errors = {};
@@ -73,56 +85,64 @@ function Register() {
     }
 
     if (!registerFormData.firstName) {
-      errors.firstname = "Le Prenom est requis.";
+      errors.firstname = "Le Prénom est requis.";
     }
 
     if (registerFormData.firstName && registerFormData.firstName.length < 3) {
-      errors.firstname = "Le prenom doit contenir au moins  3 caractères.";
+      errors.firstname = "Le prénom doit contenir au moins  3 caractères.";
     }
 
     if (!registerFormData.lastName) {
-      errors.lastname = "Le Nom est requis.";
+      errors.lastname = "Le nom est requis.";
     }
 
     if (registerFormData.lastName && registerFormData.lastName.length < 3) {
-      errors.lastname = "Le Nom doit contenir au moins  3 caractères.";
+      errors.lastname = "Le nom doit contenir au moins  3 caractères.";
     }
 
-    if (!registerFormData.phoneNumber) {
-      errors.number = "Le Numero de telephone est requis.";
-    }
+    if (registerFormData.phoneNumber) {
+      const cleanNumber = registerFormData.phoneNumber.replace(/\D/g, "");
 
-    if (
-      registerFormData.phoneNumber &&
-      registerFormData.phoneNumber.length < 10
-    ) {
-      errors.number = "Le Numéro de telephone doit contenir 10 chiffres.";
+      if (!/^(\+213|00213|0)(5|6|7)[0-9]{8}$/.test(cleanNumber)) {
+        errors.phoneNumber = "Le numéro de téléphone n'est pas valide.";
+      }
+    } else {
+      errors.phoneNumber = "Le numéro de téléphone est requis.";
     }
 
     if (!registerFormData.password) {
-      errors.password = "Le Mot de passe est requis.";
+      errors.password = "Le mot de passe est requis.";
     }
 
     if (registerFormData.password && registerFormData.password.length < 4) {
-      errors.password = " Le Mot de passe doit contenir au moin 4 caractères.";
+      errors.password = " Le mot de passe doit contenir au moins 4 caractères.";
     }
 
-    if (registerFormData.password != registerFormData.passwordConfirmation) {
+    if (registerFormData.password !== registerFormData.passwordConfirmation) {
       errors.confirmation = " Les mots de passe ne correspondent pas.";
+    }
+
+    if (!registerFormData.email) {
+      errors.email = "L'adresse e-mail est requise.";
+    }
+
+    if (
+      registerFormData.email &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registerFormData.email)
+    ) {
+      errors.email = "L'adresse e-mail n'est pas valide.";
     }
 
     return errors;
   };
 
-  const { activeMenu } = useStateContext();
-
   return (
     <div>
-      <div className="bg-[#FAFBFB] min-h-screen">
-        <div className="p-4 mx-auto max-w-lg pt-12">
+      <div className="bg-[#FAFBFB] min-h-screen  max-w-screen lg:max-w-7xl">
+        <div className="p-4 mx-auto max-w-lg">
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-6 rounded-md shadow-md"
+            className="bg-white p-6 rounded-lg shadow-md"
           >
             <img
               className=" object-scale-down h-20 w-20"
@@ -142,8 +162,8 @@ function Register() {
               <input
                 className={
                   !formErrors.username
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="text"
                 name="username"
@@ -166,8 +186,8 @@ function Register() {
               <input
                 className={
                   !formErrors.firstname
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="text"
                 name="firstName"
@@ -190,8 +210,8 @@ function Register() {
               <input
                 className={
                   !formErrors.lastname
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="text"
                 name="lastName"
@@ -214,10 +234,10 @@ function Register() {
               <input
                 className={
                   !formErrors.number
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
-                type="number"
+                type="text"
                 name="phoneNumber"
                 id="phoneNumber"
                 placeholder="XX XX XX XX XX"
@@ -236,7 +256,7 @@ function Register() {
                 Année de naissance
               </label>
               <input
-                className="border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400"
+                className="bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400"
                 type="date"
                 name="dateOfBirth"
                 id="dateOfBirth"
@@ -249,14 +269,37 @@ function Register() {
                 className="block font-bold mb-2 text-gray-700"
                 htmlFor="password"
               >
+                E-mail
+              </label>
+              <input
+                className={
+                  !formErrors.email
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                }
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Entrez l'adresse e-mail"
+                value={registerFormData.email}
+                onChange={handleChange}
+              />
+              <p className="text-red-600 ml-3 text-[14px]">
+                {formErrors.email}
+              </p>
+            </div>
+            <div className="mb-4">
+              <label
+                className="block font-bold mb-2 text-gray-700"
+                htmlFor="password"
+              >
                 Mot de passe
               </label>
-
               <input
                 className={
                   !formErrors.password
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="password"
                 name="password"
@@ -279,8 +322,8 @@ function Register() {
               <input
                 className={
                   !formErrors.confirmation
-                    ? "border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="password"
                 name="passwordConfirmation"
@@ -301,7 +344,7 @@ function Register() {
                 Role
               </label>
               <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-100 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
                 id="role"
                 value={role}
                 onChange={(event) => setRole(event.target.value)}

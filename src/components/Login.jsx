@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/djezzy.png";
 import { FaUser, FaLock } from "react-icons/fa";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useLocalState } from "../util/useLocalStorage";
-import { message } from "antd";
 
 export default function Login() {
   const [token, setToken] = useLocalState("", "token");
@@ -45,7 +43,7 @@ export default function Login() {
       })
       .then(([body, headers]) => {
         setToken(body);
-        window.location.href = "test/*";
+        window.location.href = "/dashboard";
       })
       .catch((message) => {
         setaccount(true);
@@ -96,7 +94,7 @@ export default function Login() {
                     id="username"
                     type="text"
                     name="username"
-                    className="text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
+                    className="text-base bg-gray-200 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
                     placeholder="Nom d'utilisateur"
                     onChange={handleChange}
                     value={loginFormData.username}
@@ -120,7 +118,7 @@ export default function Login() {
                     id="password"
                     type="password"
                     name="password"
-                    className="text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
+                    className="text-base bg-gray-200 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
                     placeholder="Mot de passe"
                     onChange={handleChange}
                     value={loginFormData.password}

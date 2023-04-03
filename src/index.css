@@ -2,43 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-.btn-open {
-position: absolute;
-top: 20px;
-right: calc(100% - 60px);
-background-color: #000;
-color: #fff;
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-}
-
-.btn-close {
-position: absolute;
-top: 20px;
-right: calc(100% - 60px);
-background-color: #fff;
-color: #000;
-padding: 10px 20px;
-border: 1px solid #000;
-border-radius: 5px;
-}
-
-@layer base {
-    li{
-        @apply p-4
-    }
-
-
-}
-
 body{
-
-    font-family: 'Open Sans', sans-serif;
-
-
+background-color:white;
 }
-

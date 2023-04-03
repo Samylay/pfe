@@ -43,7 +43,7 @@ function NavBaar() {
           <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center">
             <div className="bg-white rounded-md shadow-lg">
               <div className="bg-red-500 rounded-t-md px-6 py-4">
-                <h2 className="text-white text-lg font-bold mb-2">
+                <h2 className="text-white text-lsg font-bold mb-2">
                   Voulez-vous vraiment vous déconnecter?
                 </h2>
               </div>

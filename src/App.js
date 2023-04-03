@@ -6,8 +6,9 @@ import jwt_decode from "jwt-decode";
 
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Test from "./components/Test";
 import NavBar from "./components/NavBar";
+import AdminDashboard from "./components/AdminDashboard";
+// import AdminDashboard from "./components/AdminDashboard";
 
 function App() {
   const [token, setToken] = useLocalState("", "token");
@@ -29,14 +30,15 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route
-            path="/test/*"
+            path="/dashboard/*"
             element={
               role === "ROLE_ADMIN" ? (
                 <PrivateRoute>
-                  <Test />
+                  <AdminDashboard/>
                 </PrivateRoute>
               ) : (
                 <PrivateRoute>
+                  {/* this should be the user dashboard */}
                   <NavBar />
                 </PrivateRoute>
               )

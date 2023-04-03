@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./Header";
 import DataTable from "./DataTable";
 
 const Utilisateurs = () => {
@@ -7,7 +6,12 @@ const Utilisateurs = () => {
 
   return (
     <div className="  p-2 md:p-10 bg-[#FAFBFB]  rounded-3xl ">
-      <Header category="" title="Liste des utilisateurs" />
+      <div className=" mb-10">
+        <p className="text-3xl font-extrabold tracking-tight text-slate-900 mb-5">
+          Liste des utilisateurs
+        </p>
+        <div className="border-t border-gray-700"></div>
+      </div>
       <div>
         <DataTable />
       </div>

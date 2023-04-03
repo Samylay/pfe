@@ -1,4 +1,3 @@
-import { useLocalState } from "../util/useLocalStorage";
 
 function request(url, method, token, reqBody) {
   const fetchData = {
