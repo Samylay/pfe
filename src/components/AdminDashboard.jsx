@@ -1,5 +1,4 @@
 import React from "react";
-import Sidebar from "./Sidebar";
 import { useStateContext } from "../contexts/ContextProvider";
 import NavBar from "./NavBar";
 import { Route, Routes } from "react-router-dom";
@@ -8,6 +7,7 @@ import Utilisateurs from "./Utilisateurs";
 import Update from "./Update";
 import Register from "./Register";
 import DashBoard from "./DashBoard";
+import Sidebar from "./Sidebar";
 import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "./ChatSystem";
 
@@ -15,15 +15,14 @@ export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
 
   return (
-    <div className="flex relative">
-      <div className="w-full">
+    <div className="flex relative w-full bg-red-300">
         {activeMenu && <Sidebar />}
         <ChatSystem />
         <div
           className={
             activeMenu
-              ? "min-h-screen md:ml-72 max-w-full lg:max-w-7xl"
-              : "min-h-screen w-screen max-w-full lg:max-w-7xl"
+              ? "min-h-screen md:ml-72 w-screen max-w-full"
+              : "min-h-screen w-screen max-w-full"
           }
         >
           <div className="bg-[#FAFBFB]">
@@ -67,7 +66,6 @@ export default function AdminDashboard() {
             ;
           </div>
         </div>
-      </div>
     </div>
   );
 }

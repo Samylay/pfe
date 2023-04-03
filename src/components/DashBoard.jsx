@@ -48,10 +48,10 @@ const dataCards = [
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-1 bg-gray-200 min-h-screen">
-      <div className="flex-1 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div className="flex flex-1 bg-gray-100 min-h-screen w-full">
+      <div className="flex-1 max-w-7xl w-full mx-auto py-6 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Dashboard</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 z-1">
           {/* Display 4 cards with increased percentages */}
           {dataCards.map((card) => (
             <div className="bg-white rounded-md p-6" key={card.title}>
