@@ -24,14 +24,14 @@ function Register() {
       [event.target.name]: event.target.value,
     });
   };
-
+  //submission logic
   const handleSubmit = (event) => {
     event.preventDefault();
     setFormErrors(validate());
     setIsSubmit(true);
   };
 
-  const [token, setToken] = useLocalState("", "token");
+  const [token] = useLocalState("", "token");
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -52,7 +52,6 @@ function Register() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-
         method: "POST",
         body: JSON.stringify(reqBody),
       }).then((response) => {
@@ -138,8 +137,8 @@ function Register() {
 
   return (
     <div>
-      <div className="bg-[#FAFBFB] min-h-screen  max-w-screen lg:max-w-7xl">
-        <div className="p-4 mx-auto max-w-lg">
+      <div className="bg-[#FAFBFB] min-h-screen max-w-screen">
+        <div className="p-4 mx-auto w-1/2">
           <form
             onSubmit={handleSubmit}
             className="bg-white p-6 rounded-lg shadow-md"

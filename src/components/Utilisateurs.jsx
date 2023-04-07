@@ -1,9 +1,7 @@
 import React from "react";
-import DataTable from "./DataTable";
+import DataTable from "./UserTable";
 
 const Utilisateurs = () => {
-
-
   return (
     <div className="  p-2 md:p-10 bg-[#FAFBFB]  rounded-3xl ">
       <div className=" mb-10">

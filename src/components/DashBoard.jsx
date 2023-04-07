@@ -10,7 +10,7 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
-import {Table} from "antd";
+import { Table, Card } from "antd";
 
 const dataLine = [
   { name: "A", value: 400 },
@@ -26,21 +26,21 @@ const dataTop5 = [
   { name: "Product D", value: 2000 },
   { name: "Product E", value: 1000 },
 ];
-  const columns = [
-    {
-      title: "name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "name",
-      dataIndex: "value",
-      key: "name",
-    }
-  ];
+const columns = [
+  {
+    title: "name",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "name",
+    dataIndex: "value",
+    key: "name",
+  },
+];
 
 const dataCards = [
-  { title: "Sales", value: 25, increase: 10 },
+  { title: "Sales", value: 250, increase: -10 },
   { title: "Revenue", value: 5000, increase: 5 },
   { title: "Customers", value: 1000, increase: 20 },
   { title: "Orders", value: 200, increase: 15 },
@@ -54,36 +54,35 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-4">
           {/* Display 4 cards with increased percentages */}
           {dataCards.map((card) => (
-            <div className="bg-white rounded-md p-6 m-2" key={card.title}>
-              <h3 className="text-lg font-bold text-gray-800 mb-4">
-                {card.title}
-              </h3>
-              <div className="relative w-full h-full">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-4xl font-bold text-gray-800">
-                    {card.value}
-                  </div>
-                  <div className="flex items-center">
-                    <div
-                      className={`text-sm font-bold rounded-full px-2 py-1 ${
-                        card.increase > 0 ? "bg-green-500" : "bg-red-500"
-                      } text-white`}
-                    >
-                      {card.increase > 0 ? "+" : "-"}
-                      {card.increase}%
-                    </div>
-                  </div>
+            <Card
+              className="rounded-md m-2"
+              key={card.title}
+              title={card.title}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-4xl font-bold text-gray-800">
+                  {card.value}
                 </div>
-                <div className="relative w-full h-2 bg-gray-300 rounded-full">
+                <div className="flex items-center">
                   <div
-                    className={`absolute top-0 left-0 h-2 rounded-full ${
+                    className={`text-sm font-bold rounded-full px-2 py-1 ${
                       card.increase > 0 ? "bg-green-500" : "bg-red-500"
-                    }`}
-                    style={{ width: `${Math.abs(card.increase)}%` }}
-                  ></div>
+                    } text-white`}
+                  >
+                    {card.increase > 0 ? "+" : ""}
+                    {card.increase}%
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="relative w-full h-2 bg-gray-300 rounded-full">
+                <div
+                  className={`absolute top-0 left-0 h-2 rounded-full ${
+                    card.increase > 0 ? "bg-green-500" : "bg-red-500"
+                  }`}
+                  style={{ width: `${Math.abs(card.increase)}%` }}
+                ></div>
+              </div>
+            </Card>
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-2 my-4">
@@ -93,7 +92,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-bold text-gray-800 mb-4">
                 Line Chart
               </h3>
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-ful flex flex-grow">
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={dataLine}>
                     <CartesianGrid strokeDasharray="3 3" />

@@ -12,11 +12,11 @@ const Update = () => {
   const [birthdate, setBirthdate] = useState("");
   const [role, setRole] = useState("");
   const { id } = useParams();
-  const [token, setToken] = useLocalState("", "token");
+  const [token] = useLocalState("", "token");
 
   function cancel(event) {
     event.preventDefault();
-    window.location.href = "/test/users";
+    window.location.href = "/dashboard/users";
   }
 
   function handleSubmit(event) {
@@ -40,7 +40,7 @@ const Update = () => {
       method: "PUT",
       body: JSON.stringify(reqbody),
     }).then((response) => {
-      if (response.status === 200) window.location.href = "/test/users";
+      if (response.status === 200) window.location.href = "/dashboard/users";
     });
   }
 

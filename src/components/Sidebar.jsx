@@ -29,7 +29,7 @@ function Sidebar() {
   };
 
   const normalLink =
-    "flex items-center gap-5 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-400 hover:text-white m-2";
+    "flex items-center gap-5 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2";
   const activeLinkClass =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-red-600";
 

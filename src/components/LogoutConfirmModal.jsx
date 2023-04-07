@@ -4,7 +4,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useLocalState } from "../util/useLocalStorage";
 
 function LogoutConfirmModal({ isOpen, onClose }) {
-  const [token, setToken] = useLocalState("", "token");
+  const [setToken] = useLocalState("", "token");
 
   function Logout() {
     setToken(null);

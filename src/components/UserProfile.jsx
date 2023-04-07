@@ -1,27 +1,30 @@
 import React, { useState } from "react";
-import { MdOutlineCancel } from "react-icons/md";
+import { Modal, Avatar, Typography, Button } from "antd";
 
 import user from "../data/user.jpg";
-import LogoutButton from "./LogoutButton";
 import jwt_decode from "jwt-decode";
 import { useLocalState } from "../util/useLocalStorage";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import { useStateContext } from "../contexts/ContextProvider";
+import { FiLogOut } from "react-icons/fi";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
+const { Title, Text } = Typography;
 
 const UserProfile = () => {
-  const [token, setToken] = useLocalState("", "token");
-  const [name, setName] = useState(getNameFromToken());
+  const [token] = useLocalState("", "token");
+  const [name] = useState(getNameFromToken());
 
   function getNameFromToken() {
     if (token) {
       if (token.length > 50) {
         const decodeToken = jwt_decode(token);
-        console.log(decodeToken);
+        // console.log(decodeToken);
         return decodeToken.lastname + " " + decodeToken.firstname;
       }
     }
   }
-  const [role, setRole] = useState(getRoleFromToken());
+  const [role] = useState(getRoleFromToken());
 
   function getRoleFromToken() {
     if (token) {
@@ -32,47 +35,62 @@ const UserProfile = () => {
     }
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { setisClicked, initialState } = useStateContext();
+  const { setisClicked } = useStateContext();
+
+  const handleModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+    setisClicked({
+      userProfile: !UserProfile,
+    });
+  };
 
   return (
-    <div>
-      <LogoutConfirmModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-      <div className="z-10 absolute right-1 top-16 bg-white p-8 rounded-lg w-80">
+    <>
+      <div
+        className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
+        onClick={handleModalOpen}
+      >
+        <LogoutConfirmModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+        <Avatar size={40} src={user} />
+        <Title level={5} className="mt-2">
+          {name}
+        </Title>
+        <MdOutlineKeyboardArrowDown />
+      </div>
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+      >
         <div className="flex justify-between items-center">
-          <p className="font-semibold text-lg text-gray-800">Profile</p>
-
-          <button
-            onClick={() =>
-              setisClicked({
-                userProfile: false,
-              })
-            }
-            type="button"
-            className={`text-2xl text-gray-800 py-2 pl-3 w-1/6 rounded-lg hover:drop-shadow-xl hover:bg-gray-100`}
-          >
-            <MdOutlineCancel />
-          </button>
+          <Title level={3} className="mb-0">
+            Profile
+          </Title>
         </div>
         <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
-          <img
-            className="rounded-full h-20 w-20"
-            src={user}
-            alt="user-profile"
-          />
+          <Avatar size={64} src={user} />
           <div>
-            <p className="font-semibold text-xl text-gray-800"> {name} </p>
-            <p className="text-gray-800 text-sm ">{role.substring(5)}</p>
+            <Title level={4} className="mb-0">
+              {name}
+            </Title>
+            <Text type="secondary">{role.substring(5)}</Text>
           </div>
         </div>
+        <button
+          onClick={() => {//TODO MAKE THE THE LOGOUT CONFIRM MODAL DISPLAY
 
-        <div className="mt-5">
-          <LogoutButton setIsopen={() => setIsModalOpen(true)} />
-        </div>
-      </div>
-    </div>
+            <LogoutConfirmModal onClose={() => setIsModalOpen(false)} />;
+          }}
+          className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 w-full transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+        >
+          <span className="mr-2">Déconnexion</span>
+          <FiLogOut />
+        </button>
+      </Modal>
+    </>
   );
 };
 

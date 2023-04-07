@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ChatIcon, XIcon } from "@heroicons/react/solid";
 import { MdSend } from "react-icons/md";
@@ -12,6 +13,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
 
 function ChatSystem() {
+
   dayjs.locale("fr");
   let dates = LocalDateTime.now();
   const [token, setToken] = useLocalState("", "token");
@@ -88,7 +90,7 @@ function ChatSystem() {
         >
           <div className="chat-image avatar">
             <div className="w-8 rounded-full">
-              <img src={userProfile} alt="user's profile picture"/>
+              <img src={userProfile} alt="user's profile picture" />
             </div>
           </div>
           <div className="chat-header ml-3  ">{chatMessageDto.sender}</div>
@@ -154,6 +156,8 @@ function ChatSystem() {
     }
   }, [chatMessages]);
 
+
+
   return (
     <div
       className={`fixed bottom-0 right-3 z-50 ${
@@ -162,7 +166,6 @@ function ChatSystem() {
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
-      {" "}
       {!showChatbox && (
         <button
           className="rounded-full flex items-center gap-2 py-2 px-4 bg-red-600 text-white hover:bg-red-700 transition-colors"
