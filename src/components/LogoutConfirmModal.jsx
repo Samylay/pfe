@@ -10,7 +10,6 @@ function LogoutConfirmModal({ isOpen, onClose }) {
   function Logout() {
     setToken(null);
     window.location.href = "/login";
-    console.log('pp')
   }
 
   return (

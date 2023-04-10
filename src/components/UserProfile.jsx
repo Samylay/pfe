@@ -44,6 +44,10 @@ const UserProfile = () => {
       userProfile: !UserProfile,
     });
   };
+  const handleLogoutModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+    setIsLogoutModalOpen(!isLogoutModalOpen);
+  };
 
   return (
     <>
@@ -51,12 +55,12 @@ const UserProfile = () => {
         className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
         onClick={handleModalOpen}
       >
-        {isLogoutModalOpen &&
+        {isLogoutModalOpen && (
           <LogoutConfirmModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            isOpen={isLogoutModalOpen}
+            onClose={() => setIsLogoutModalOpen(false)}
           />
-        }
+        )}
         <Avatar size={40} src={user} />
         <Title level={5} className="mt-2">
           {name}
@@ -83,18 +87,14 @@ const UserProfile = () => {
           </div>
         </div>
         <button
-          onClick={() => {
-            //TODO MAKE THE THE LOGOUT CONFIRM MODAL DISPLAY
-            setIsModalOpen(false);
-            setIsLogoutModalOpen(true);
-            <LogoutConfirmModal />;
-          }}
+          onClick={handleLogoutModalOpen}
           className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 w-full transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
         >
           <span className="mr-2">Déconnexion</span>
           <FiLogOut />
         </button>
       </Modal>
+      {<LogoutConfirmModal />}{" "}
     </>
   );
 };

@@ -160,9 +160,16 @@ function ChatSystem() {
           <span>Cliquez ici pour discuter</span>
         </button>
       )}
-<div
-  className={`fixed bottom-0 right-3 z-50 transition-opacity duration-300`}
->
+      <Transition
+        show={showChatbox}
+        enter="transition-opacity duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+        className="fixed bottom-0 right-3 z-50"
+      >
         {(ref) => (
           <div
             ref={ref}
@@ -203,7 +210,7 @@ function ChatSystem() {
             </div>
           </div>
         )}
-      </div>
+      </Transition>
     </div>
   );
 }
