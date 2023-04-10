@@ -58,19 +58,7 @@ function Register() {
         if (response.status === 200) window.location.href = "users";
       });
     }
-  }, [
-    formErrors,
-    isSubmit,
-    registerFormData.dateOfBirth,
-    registerFormData.email,
-    registerFormData.firstName,
-    registerFormData.lastName,
-    registerFormData.password,
-    registerFormData.phoneNumber,
-    registerFormData.username,
-    role,
-    token,
-  ]);
+  }, [formErrors]);
 
   const validate = () => {
     const errors = {};
@@ -102,11 +90,9 @@ function Register() {
     if (registerFormData.phoneNumber) {
       const cleanNumber = registerFormData.phoneNumber.replace(/\D/g, "");
 
-      if (!/^(\+213|00213|0)(5|6|7)[0-9]{8}$/.test(cleanNumber)) {
-        errors.phoneNumber = "Le numéro de téléphone n'est pas valide.";
+      if (!registerFormData.phoneNumber) {
+        errors.phoneNumber = "Le numéro de téléphone est requis.";
       }
-    } else {
-      errors.phoneNumber = "Le numéro de téléphone est requis.";
     }
 
     if (!registerFormData.password) {
@@ -272,9 +258,7 @@ function Register() {
               </label>
               <input
                 className={
-                  !formErrors.email
-                    ? "bg-gray-100 text-gray-800 border border-gray-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
-                    : "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
+                  "bg-gray-100 text-gray-800 border border-red-400 p-2 w-full text-base placeholder-gray-500 pr-4 rounded-lg py-2 focus:outline-none focus:border-red-400 "
                 }
                 type="email"
                 name="email"

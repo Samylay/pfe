@@ -26,6 +26,7 @@ export default function AdminDashboard() {
             : "min-h-screen w-screen max-w-full"
         }
       >
+        <ChatSystem />
         <div className="bg-[#FAFBFB]">
           <NavBar />
         </div>
@@ -35,7 +36,6 @@ export default function AdminDashboard() {
               path="/"
               element={
                 <PrivateRoute>
-                  <ChatSystem/>
                   <DashBoard />
                 </PrivateRoute>
               }

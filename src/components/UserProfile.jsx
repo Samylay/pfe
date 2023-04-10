@@ -19,7 +19,6 @@ const UserProfile = () => {
     if (token) {
       if (token.length > 50) {
         const decodeToken = jwt_decode(token);
-        // console.log(decodeToken);
         return decodeToken.lastname + " " + decodeToken.firstname;
       }
     }
@@ -35,6 +34,8 @@ const UserProfile = () => {
     }
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
   const { setisClicked } = useStateContext();
 
   const handleModalOpen = () => {
@@ -50,10 +51,12 @@ const UserProfile = () => {
         className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
         onClick={handleModalOpen}
       >
-        <LogoutConfirmModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
+        {isLogoutModalOpen &&
+          <LogoutConfirmModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        }
         <Avatar size={40} src={user} />
         <Title level={5} className="mt-2">
           {name}
@@ -80,9 +83,11 @@ const UserProfile = () => {
           </div>
         </div>
         <button
-          onClick={() => {//TODO MAKE THE THE LOGOUT CONFIRM MODAL DISPLAY
-
-            <LogoutConfirmModal onClose={() => setIsModalOpen(false)} />;
+          onClick={() => {
+            //TODO MAKE THE THE LOGOUT CONFIRM MODAL DISPLAY
+            setIsModalOpen(false);
+            setIsLogoutModalOpen(true);
+            <LogoutConfirmModal />;
           }}
           className="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 w-full transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
         >

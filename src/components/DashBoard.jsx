@@ -85,9 +85,10 @@ export default function Dashboard() {
             </Card>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 m-2 my-4">
+        <div className="flex flex-wrap flex-grow  m-2 my-4">
           {/* Display 3 instances of the LineChart */}
-          {[...Array(3)].map((_, index) => (
+          {/* WRAP THE CHARTS IN A TOGGLEABLE LIST THAT DISPLAYS ONE GRAPH AT AT TIME FOR THE ENTIRE WIDTH */}
+          {[...Array(2)].map((_, index) => (
             <div className="bg-white rounded-md p-6" key={index}>
               <h3 className="text-lg font-bold text-gray-800 mb-4">
                 Line Chart

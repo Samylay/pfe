@@ -1,11 +1,11 @@
-import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ChatIcon, XIcon } from "@heroicons/react/solid";
 import { MdSend } from "react-icons/md";
+import { Transition } from "@headlessui/react";
 import logo from "../assets/thelogo.png";
 import { useLocalState } from "../util/useLocalStorage";
 
-import userProfile from "../data/user.jpg";
+import userf from "../data/user.jpg";
 import jwt_decode from "jwt-decode";
 import { LocalDateTime } from "@js-joda/core";
 import dayjs from "dayjs";
@@ -13,7 +13,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
 
 function ChatSystem() {
-
   dayjs.locale("fr");
   let dates = LocalDateTime.now();
   const [token, setToken] = useLocalState("", "token");
@@ -21,12 +20,14 @@ function ChatSystem() {
 
   const [name, setName] = useState(getNameFromToken());
   const [change, setChange] = useState("chat-bubble");
+  const date = "2hours ago";
   dayjs.extend(relativeTime);
 
   function getNameFromToken() {
     if (token) {
       if (token.length > 50) {
         const decodeToken = jwt_decode(token);
+
         return decodeToken.firstname;
       }
     }
@@ -56,6 +57,7 @@ function ChatSystem() {
   useEffect(() => {
     webSocket.current = new WebSocket("ws://localhost:8080/chat");
     webSocket.current.onopen = (event) => {};
+
     webSocket.current.onclose = (event) => {};
     return () => {
       webSocket.current.close();
@@ -90,7 +92,7 @@ function ChatSystem() {
         >
           <div className="chat-image avatar">
             <div className="w-8 rounded-full">
-              <img src={userProfile} alt="user's profile picture" />
+              <img src={userf} />
             </div>
           </div>
           <div className="chat-header ml-3  ">{chatMessageDto.sender}</div>
@@ -131,20 +133,11 @@ function ChatSystem() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+
         method: "POST",
         body: JSON.stringify(reqBody),
       });
       setMessage("");
-    }
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-    if (event.key === "Escape") {
-      // Close the chatbox here
-      toggleChatbox();
     }
   };
 
@@ -156,16 +149,8 @@ function ChatSystem() {
     }
   }, [chatMessages]);
 
-
-
   return (
-    <div
-      className={`fixed bottom-0 right-3 z-50 ${
-        showChatbox ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-300`}
-      onKeyDown={handleKeyDown}
-      tabIndex={-1}
-    >
+    <div className="fixed bottom-0 right-0 py-2 px-4 mb-8 z-50 ">
       {!showChatbox && (
         <button
           className="rounded-full flex items-center gap-2 py-2 px-4 bg-red-600 text-white hover:bg-red-700 transition-colors"
@@ -175,17 +160,20 @@ function ChatSystem() {
           <span>Cliquez ici pour discuter</span>
         </button>
       )}
-      <div>
-        {showChatbox && (
+<div
+  className={`fixed bottom-0 right-3 z-50 transition-opacity duration-300`}
+>
+        {(ref) => (
           <div
-            className="fixed bottom-2 right-4 z-50 bg-white shadow-lg rounded-lg w-96"
+            ref={ref}
+            className="bg-white shadow-lg rounded-lg  w-96"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-gradient-to-l from-red-700 via-red-600 to-red-500 text-white rounded-t-lg p-4 h-[70px]">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <img src={logo} alt="djeezy logo" className="w-8 h-8 mr-2" />
-                  <p className="ml-1">Chat</p>
+                  <p className="ml-1">Vous pouvez chattez ici! </p>
                 </div>
                 <button onClick={toggleChatbox}>
                   <XIcon className="w-6 h-6 text-white" />
@@ -198,13 +186,12 @@ function ChatSystem() {
             >
               {listChatMessages}
             </div>
-            <div className="flex m-3 text-gray-800">
+            <div className="flex mb-3">
               <input
                 onChange={handleMessageChange}
-                onKeyDown={handleKeyDown}
                 value={message}
                 type="text"
-                className="flex-1 bg-gray-200 border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="flex-1  bg-gray-200 border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                 placeholder="Saisissez votre message ici..."
               />
               <button
