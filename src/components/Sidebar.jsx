@@ -6,14 +6,6 @@ import logo from "../assets/djezzy.png";
 import { useStateContext } from "../contexts/ContextProvider";
 import { useLocalState } from "../util/useLocalStorage";
 import jwt_decode from "jwt-decode";
-import { Menu } from "antd";
-import {
-  AppstoreOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-
-const { SubMenu } = Menu;
 
 function Sidebar() {
   const [token, setToken] = useLocalState("", "token");
@@ -21,7 +13,6 @@ function Sidebar() {
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
   const [activeLink, setActiveLink] = useState("");
   let links = role === "ROLE_ADMIN" ? adminLinks : userLinks;
-
   function getRoleFromToken() {
     if (token) {
       if (token.length > 50) {
@@ -36,6 +27,11 @@ function Sidebar() {
       setActiveMenu(false);
     }
   };
+
+  const normalLink =
+    "flex items-center gap-5 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2";
+  const activeLinkClass =
+    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-red-600";
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -68,32 +64,28 @@ function Sidebar() {
             </button>
           </div>
           <div className="mt-10">
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={[activeLink]}
-              onClick={(link) => handleLinkClick(link.key)}
-            >
-              {links.map((item) => (
-                <SubMenu
-                  key={item.title}
-                  icon={<AppstoreOutlined />}
-                  title={item.title}
-                >
-                  {item.links.map((link) => (
-                    <Menu.Item key={link.name} icon={<UserOutlined />}>
-                      <NavLink to={`/${link.goto}`}>
-                        <span className="capitalize">{link.name}</span>
-                      </NavLink>
-                    </Menu.Item>
-                  ))}
-                </SubMenu>
-              ))}
-            </Menu>
+            {links.map((item) => (
+              <div key={item.title}>
+                <p className="text-gray-500 m-3 mt-4 uppercase">{item.title}</p>
+                {item.links.map((link) => (
+                  <NavLink
+                    className={
+                      link === activeLink ? activeLinkClass : normalLink
+                    }
+                    to={`/${link.goto}`}
+                    key={link.name}
+                    onClick={(link) => handleLinkClick(link)}
+                  >
+                    {link.icon}
+                    <span className="capitalize">{link.name}</span>
+                  </NavLink>
+                ))}
+              </div>
+            ))}
           </div>
         </>
       )}
     </div>
   );
 }
-
 export default Sidebar;
