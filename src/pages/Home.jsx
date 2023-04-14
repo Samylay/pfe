@@ -1,6 +1,6 @@
 import React from "react";
-import HomeNav from "./HomeNav";
-import Hero from "./Hero";
+import HomeNav from "../components/HomeNav";
+import Hero from "../components/Hero";
 
 function Home() {
   return (

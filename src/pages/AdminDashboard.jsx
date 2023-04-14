@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStateContext } from "../contexts/ContextProvider";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import { Route, Routes } from "react-router-dom";
 
-import Utilisateurs from "./Utilisateurs";
-import Update from "./Update";
-import Register from "./Register";
-import DashBoard from "./DashBoard";
-import Sidebar from "./Sidebar";
+import Utilisateurs from "../components/Utilisateurs";
+import Update from "../components/Update";
+import Register from "../components/Register";
+import DashBoard from "../components/DashBoard";
+import Sidebar from "../components/Sidebar";
 import PrivateRoute from "../PrivateRoute";
-import ChatSystem from "./ChatSystem";
-import KPI from "./KPI";
-import UserProfile from "./UserProfile";
+import ChatSystem from "../components/ChatSystem";
+import KPI from "../components/KPI";
 
 export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
+  const [isMobile, setIsMobile] = useState(false);
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
 
   return (
-    <div className="flex relative w-full h-full">
+    <div className="  w-full h-full">
       {activeMenu && <Sidebar />}
       <div
         className={
@@ -30,7 +39,7 @@ export default function AdminDashboard() {
         <div className="bg-[#FAFBFB]">
           <NavBar />
         </div>
-        <div>
+        <div className={isMobile ?"hidden":""}>
           <Routes>
             <Route
               path="/"

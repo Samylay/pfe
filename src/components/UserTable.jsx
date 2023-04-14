@@ -79,16 +79,35 @@ function DataTable() {
           setIsModalOpen(false);
         }}
       />
-      <div className="relative mx-4 my-2 mb-10">
+      <div className="flex items-center mx-4 my-2 mb-10">
         <input
           type="text"
           placeholder="Search by username"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:ring-opacity-50"
+          className="flex-grow pl-10 pr-4 py-2 rounded-full bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 focus:ring-opacity-50"
         />
-        <SearchIcon className="h-5 w-5 absolute top-[10px] left-3 text-gray-400" />
+        <svg
+          width="24px"
+          height="24px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="ml-3 text-gray-500"
+        >
+          <g id="Interface / Search_Magnifying_Glass">
+            <path
+              id="Vector"
+              d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+        </svg>
       </div>
+
       <div className="flex-grow overflow-auto">
         <table className="min-w-full divide-y divide-gray-400">
           <thead className="bg-gray-90">

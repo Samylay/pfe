@@ -94,7 +94,7 @@ export default function Login() {
                     id="username"
                     type="text"
                     name="username"
-                    className="text-base bg-gray-200 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
+                    className="text-base bg-gray-50 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
                     placeholder="Nom d'utilisateur"
                     onChange={handleChange}
                     value={loginFormData.username}
@@ -118,7 +118,7 @@ export default function Login() {
                     id="password"
                     type="password"
                     name="password"
-                    className="text-base bg-gray-200 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
+                    className="text-base bg-gray-50 placeholder-gray-500 pl-10 pr-4 text-gray-800 rounded-lg border-2 border-gray-400 w-full py-2 focus:outline-none focus:border-red-400"
                     placeholder="Mot de passe"
                     onChange={handleChange}
                     value={loginFormData.password}

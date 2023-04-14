@@ -81,6 +81,11 @@ function ChatSystem() {
   const toggleChatbox = () => {
     setShowChatbox(!showChatbox);
   };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  };
 
   const listChatMessages = chatMessages.map((chatMessageDto, index) => (
     <div key={index}>
@@ -99,14 +104,14 @@ function ChatSystem() {
           <div
             className={` ${
               chatMessageDto.sender === name
-                ? "chat-bubble bg-red-600"
-                : "chat-bubble"
+                ? "chat-bubble bg-red-600 text-white"
+                : "chat-bubble text-white"
             }`}
           >
             {chatMessageDto.input}
           </div>
 
-          <div className="chat-footer opacity-50">
+          <div className="chat-footer opacity-50 text-gray-600">
             {dayjs(chatMessageDto.sentDate).fromNow()}
           </div>
         </div>
@@ -196,9 +201,10 @@ function ChatSystem() {
             <div className="flex mb-3">
               <input
                 onChange={handleMessageChange}
+                onKeyDown={handleKeyDown}
                 value={message}
                 type="text"
-                className="flex-1  bg-gray-200 border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
+                className="flex-1 text-gray-800 bg-gray-100 border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent"
                 placeholder="Saisissez votre message ici..."
               />
               <button

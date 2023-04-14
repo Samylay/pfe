@@ -4,15 +4,16 @@ import { useLocalState } from "./util/useLocalStorage";
 import PrivateRoute from "./PrivateRoute";
 import jwt_decode from "jwt-decode";
 
-import Login from "./components/Login";
-import Home from "./components/Home";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import UserDashboard from "./pages/UserDashboard";
 
 
 function App() {
-  const [token, setToken] = useLocalState("", "token");
-  const [role, setRole] = useState(getRoleFromToken());
+  const [token] = useLocalState("", "token");
+  const [role ] = useState(getRoleFromToken());
 
   function getRoleFromToken() {
     if (token) {
@@ -24,7 +25,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="bg-white">
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />}></Route>
@@ -34,12 +35,12 @@ function App() {
             element={
               role === "ROLE_ADMIN" ? (
                 <PrivateRoute>
-                  <AdminDashboard/>
+                  <AdminDashboard />
                 </PrivateRoute>
               ) : (
                 <PrivateRoute>
                   {/* this should be the user dashboard */}
-                  <NavBar />
+                  <UserDashboard />
                 </PrivateRoute>
               )
             }

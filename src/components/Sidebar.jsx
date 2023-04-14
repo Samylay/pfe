@@ -12,6 +12,7 @@ function Sidebar() {
   const [role, setRole] = useState(getRoleFromToken());
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
   const [activeLink, setActiveLink] = useState("");
+  
   let links = role === "ROLE_ADMIN" ? adminLinks : userLinks;
   function getRoleFromToken() {
     if (token) {

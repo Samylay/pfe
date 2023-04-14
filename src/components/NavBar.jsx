@@ -18,16 +18,6 @@ function NavBar() {
     setScreenSize,
   } = useStateContext();
 
-  const [token, setToken] = useLocalState("", "token");
-  const [name, setName] = useState(getNameFromToken());
-
-  function getNameFromToken() {
-    if (token && token.length > 50) {
-      const decodeToken = jwt_decode(token);
-      return decodeToken.firstname;
-    }
-  }
-
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -40,17 +30,20 @@ function NavBar() {
   }, [screenSize]);
 
   return (
-    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20">
-      <Tooltip title="Menu" placement="bottom">
-        <button
+    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20" onClick={console.log("pp")}>
+      <div>
+
+      {!activeMenu &&
+          <button
           className="relative text-xl rounded-full p-3 hover:bg-light-gray"
           type="button"
           onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
           style={{ color: "red" }}
-        >
-          <AiOutlineMenu size={25} />
-        </button>
-      </Tooltip>
+          >
+            <AiOutlineMenu size={25} />
+          </button>
+      }
+      </div>
 
       <div
         className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"

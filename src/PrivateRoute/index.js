@@ -5,7 +5,7 @@ import request from "../services/fetchService";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const PrivateRoute = ({ children }) => {
-  const [token, setToken] = useLocalState("", "token");
+  const [token,setToken] = useLocalState("", "token");
   const [isLoading, setLoading] = useState(true);
   const [isValid, setIsvalid] = useState(null);
   if (token) {
