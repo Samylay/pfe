@@ -15,12 +15,11 @@ import "dayjs/locale/fr";
 function ChatSystem() {
   dayjs.locale("fr");
   let dates = LocalDateTime.now();
-  const [token, setToken] = useLocalState("", "token");
+  const [token] = useLocalState("", "token");
   const webSocket = useRef(null);
 
-  const [name, setName] = useState(getNameFromToken());
-  const [change, setChange] = useState("chat-bubble");
-  const date = "2hours ago";
+  const [name] = useState(getNameFromToken());
+  // const [change, setChange] = useState("chat-bubble");
   dayjs.extend(relativeTime);
 
   function getNameFromToken() {
@@ -52,7 +51,7 @@ function ChatSystem() {
       .then((userData) => {
         setChatMessages(userData);
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     webSocket.current = new WebSocket("ws://localhost:8080/chat");
@@ -62,7 +61,7 @@ function ChatSystem() {
     return () => {
       webSocket.current.close();
     };
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     webSocket.current.onmessage = (event) => {
@@ -97,7 +96,7 @@ function ChatSystem() {
         >
           <div className="chat-image avatar">
             <div className="w-8 rounded-full">
-              <img src={userf} />
+              <img src={userf} alt="user profile"/>
             </div>
           </div>
           <div className="chat-header ml-3  ">{chatMessageDto.sender}</div>
