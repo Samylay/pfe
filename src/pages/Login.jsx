@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/djezzy.png";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useLocalState } from "../util/useLocalStorage";
+import HomeNav from "../components/HomeNav";
 
 export default function Login() {
   const [token, setToken] = useLocalState("", "token");
@@ -56,14 +57,15 @@ export default function Login() {
 
   return (
     <div>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
+      <HomeNav />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
         <div className="flex flex-col bg-white shadow-md px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
-          <img
+          {/* <img
             className=" object-scale-down h-20 w-20"
             src={logo}
             alt="djeezy logo"
-          />
-          <div class="font-medium self-center text-2xl uppercase text-gray-800">
+          /> */}
+          <div class="font-medium self-center text-2xl uppercase text-gray-800 pt-4">
             Se connecter
           </div>
           {account && (

@@ -11,9 +11,7 @@ function NavBar() {
   const {
     activeMenu,
     setActiveMenu,
-    isClicked,
     setisClicked,
-    handleClick,
     screenSize,
     setScreenSize,
   } = useStateContext();
@@ -30,7 +28,7 @@ function NavBar() {
   }, [screenSize]);
 
   return (
-    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20" onClick={console.log("pp")}>
+    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20">
       <div>
 
       {!activeMenu &&

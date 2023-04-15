@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/djezzy.png";
 import { useLocalState } from "../util/useLocalStorage";
+import HomeNav from "../components/HomeNav";
 
 function Register() {
   const [registerFormData, setRegisterFormData] = useState({
@@ -123,17 +124,18 @@ function Register() {
 
   return (
     <div>
-      <div className="bg-[#FAFBFB] min-h-screen max-w-screen">
-        <div className="p-4 mx-auto w-1/2">
+      <HomeNav/>
+      <div className="bg-[#FAFBFB] min-h-screen max-w-screen py-24">
+        <div className="p-4 mx-auto w-full sm:w-2/3">
           <form
             onSubmit={handleSubmit}
             className="bg-white p-6 rounded-lg shadow-md"
           >
-            <img
+            {/* <img
               className=" object-scale-down h-20 w-20"
               src={logo}
               alt="djeezy logo"
-            />
+            /> */}
             <div class="font-medium p-4 self-center text-center text-2xl uppercase text-gray-800">
               Créer un compte
             </div>

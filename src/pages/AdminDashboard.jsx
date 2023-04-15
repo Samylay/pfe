@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Utilisateurs from "../components/Utilisateurs";
 import Update from "../components/Update";
-import Register from "../components/Register";
+import Register from "./Register";
 import DashBoard from "../components/DashBoard";
 import Sidebar from "../components/Sidebar";
 import PrivateRoute from "../PrivateRoute";

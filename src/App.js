@@ -5,15 +5,16 @@ import PrivateRoute from "./PrivateRoute";
 import jwt_decode from "jwt-decode";
 
 import Login from "./pages/Login";
-import Home from "./pages/Home";
-import NavBar from "./components/NavBar";
 import AdminDashboard from "./pages/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard";
-
+import Contact from "./pages/Contact";
+import Support from "./pages/Support";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
 
 function App() {
   const [token] = useLocalState("", "token");
-  const [role ] = useState(getRoleFromToken());
+  const [role] = useState(getRoleFromToken());
 
   function getRoleFromToken() {
     if (token) {
@@ -28,8 +29,11 @@ function App() {
     <div className="bg-white">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/support" element={<Support />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route
             path="/dashboard/*"
             element={
