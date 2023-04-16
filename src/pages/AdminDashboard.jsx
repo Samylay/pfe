@@ -31,7 +31,7 @@ export default function AdminDashboard() {
       <div
         className={
           activeMenu
-            ? "min-h-screen md:ml-72 w-screen max-w-full"
+            ? "hidden md:block min-h-screen md:ml-72 w-screen max-w-full"
             : "min-h-screen w-screen max-w-full"
         }
       >

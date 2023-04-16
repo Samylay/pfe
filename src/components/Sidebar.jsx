@@ -40,10 +40,10 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-72 fixed shadow-md bg-white h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto">
+    <div className="w-full md:w-72 fixed shadow-md bg-white h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto">
       {activeMenu && (
         <>
-          <div className="sidebar flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <Link
               to="/"
               onClick={handleCloseSideBar}
@@ -64,10 +64,10 @@ function Sidebar() {
               <MdOutlineCancel size={25} />
             </button>
           </div>
-          <div className="mt-10">
+          <div className="mt-12">
             {links.map((item) => (
               <div key={item.title}>
-                <p className="text-gray-500 m-3 mt-4 uppercase">{item.title}</p>
+                <p className="text-gray-500 m-3 my-4 uppercase">{item.title}</p>
                 {item.links.map((link) => (
                   <NavLink
                     className={
