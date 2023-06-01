@@ -3,7 +3,7 @@ import { Modal, Avatar, Typography, Button } from "antd";
 
 import user from "../data/user.jpg";
 import jwt_decode from "jwt-decode";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import LogoutConfirmModal from "./LogoutConfirmModal";
 import { useStateContext } from "../contexts/ContextProvider";
 import { FiLogOut } from "react-icons/fi";
@@ -14,16 +14,17 @@ const { Title, Text } = Typography;
 const UserProfile = () => {
   const [token] = useLocalState("", "token");
   const [name] = useState(getNameFromToken());
+  const [role] = useState(getRoleFromToken());
 
   function getNameFromToken() {
     if (token) {
       if (token.length > 50) {
         const decodeToken = jwt_decode(token);
+        console.log(decodeToken);
         return decodeToken.lastname + " " + decodeToken.firstname;
       }
     }
   }
-  const [role] = useState(getRoleFromToken());
 
   function getRoleFromToken() {
     if (token) {
@@ -50,7 +51,7 @@ const UserProfile = () => {
   };
 
   return (
-    <>
+    <div className="bg-red-400">
       <div
         className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
         onClick={handleModalOpen}
@@ -95,7 +96,7 @@ const UserProfile = () => {
         </button>
       </Modal>
       {<LogoutConfirmModal />}{" "}
-    </>
+    </div>
   );
 };
 

@@ -21,9 +21,9 @@ function Support() {
             initialValues={{ remember: true }}
           >
             <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: "Please enter your name!" }]}
+              label="Nom"
+              name="nom"
+              rules={[{ required: true, message: "Entrez votre nom!" }]}
             >
               <Input prefix={<TiUserOutline />} placeholder="Name" />
             </Form.Item>
@@ -31,25 +31,23 @@ function Support() {
               label="Email"
               name="email"
               rules={[
-                { required: true, message: "Please enter your email!" },
-                { type: "email", message: "Please enter a valid email!" },
+                { required: true, message: "Entrez un email!" },
+                { type: "email", message: "Entrez un email valide !" },
               ]}
             >
               <Input prefix={<MdMailOutline />} placeholder="Email" />
             </Form.Item>
             <Form.Item
-              label="Subject"
-              name="subject"
-              rules={[{ required: true, message: "Please enter a subject!" }]}
+              label="Objet"
+              name="Objet"
+              rules={[{ required: true, message: "Objet manquant!" }]}
             >
-              <Input placeholder="Subject" />
+              <Input placeholder="Objet" />
             </Form.Item>
             <Form.Item
               label="Message"
               name="message"
-              rules={[
-                { required: true, message: "Please enter your message!" },
-              ]}
+              rules={[{ required: true, message: "Entrez un message valide !" }]}
             >
               <Input.TextArea placeholder="Message" />
             </Form.Item>
@@ -59,7 +57,7 @@ function Support() {
                 htmlType="submit"
                 className="text-red-500 outline outline-red-500 hover:text-white hover:bg-red-600"
               >
-                Submit
+                Envoyer
               </Button>
             </Form.Item>
           </Form>

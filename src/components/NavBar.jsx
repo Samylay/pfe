@@ -4,17 +4,10 @@ import { Tooltip } from "antd";
 import UserProfile from "./UserProfile";
 
 import { useStateContext } from "../contexts/ContextProvider";
-import { useLocalState } from "../util/useLocalStorage";
-import jwt_decode from "jwt-decode";
 
 function NavBar() {
-  const {
-    activeMenu,
-    setActiveMenu,
-    setisClicked,
-    screenSize,
-    setScreenSize,
-  } = useStateContext();
+  const { activeMenu, setActiveMenu, setisClicked, screenSize, setScreenSize } =
+    useStateContext();
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -24,23 +17,24 @@ function NavBar() {
   }, []);
 
   useEffect(() => {
-    setActiveMenu(screenSize > 900);
+    setActiveMenu(screenSize > 720);
   }, [screenSize]);
 
   return (
-    <div className="flex justify-between items-center py-2 px-6 sticky w-full h-20">
+    <div className="flex justify-between items-center flex-wrap py-2 px-6 w-full h-20 ">
       <div>
-
-      {!activeMenu &&
-          <button
-          className="relative text-xl rounded-full p-3 hover:bg-light-gray"
-          type="button"
-          onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
-          style={{ color: "red" }}
-          >
-            <AiOutlineMenu size={25} />
-          </button>
-      }
+        {!activeMenu && (
+          <Tooltip title="Menu">
+            <button
+              className="relative text-xl rounded-full p-3 hover:bg-light-gray"
+              type="button"
+              onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
+              style={{ color: "red" }}
+            >
+              <AiOutlineMenu size={25} />
+            </button>
+          </Tooltip>
+        )}
       </div>
 
       <div

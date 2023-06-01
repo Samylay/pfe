@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "../components/ChatSystem";
 import KPI from "../components/KPI";
+import DashboardCard from "../components/DashboardCard";
 
 export default function UserDashboard() {
   const { activeMenu } = useStateContext();
@@ -47,10 +48,11 @@ export default function UserDashboard() {
               }
             ></Route>
             <Route
-              path="/Kpi"
+              path="/kpi"
               element={
                 <PrivateRoute>
                   <KPI />
+                  {/* <DashboardCard /> */}
                 </PrivateRoute>
               }
             ></Route>

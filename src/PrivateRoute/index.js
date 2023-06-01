@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import { Navigate } from "react-router-dom";
-import request from "../services/fetchService";
+import request from "../utils/fetchService";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const PrivateRoute = ({ children }) => {

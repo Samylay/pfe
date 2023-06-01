@@ -15,15 +15,15 @@ function Contact() {
         <h1 className="text-3xl font-bold mb-4">Contactez nous !</h1>
         <div className="w-1/2">
           <Form
-            name="contact-form"
+            name="support-form"
             onFinish={onFinish}
             layout="vertical"
             initialValues={{ remember: true }}
           >
             <Form.Item
               label="Nom"
-              name="name"
-              rules={[{ required: true, message: "Please enter your name!" }]}
+              name="nom"
+              rules={[{ required: true, message: "Entrez votre nom!" }]}
             >
               <Input prefix={<TiUserOutline />} placeholder="Name" />
             </Form.Item>
@@ -31,17 +31,24 @@ function Contact() {
               label="Email"
               name="email"
               rules={[
-                { required: true, message: "Please enter your email!" },
-                { type: "email", message: "Please enter a valid email!" },
+                { required: true, message: "Entrez un email!" },
+                { type: "email", message: "Entrez un email valide !" },
               ]}
             >
               <Input prefix={<MdMailOutline />} placeholder="Email" />
             </Form.Item>
             <Form.Item
+              label="Objet"
+              name="Objet"
+              rules={[{ required: true, message: "Objet manquant!" }]}
+            >
+              <Input placeholder="Objet" />
+            </Form.Item>
+            <Form.Item
               label="Message"
               name="message"
               rules={[
-                { required: true, message: "Please enter your message!" },
+                { required: true, message: "Entrez un message valide !" },
               ]}
             >
               <Input.TextArea placeholder="Message" />

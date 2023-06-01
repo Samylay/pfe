@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/djezzy.png";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import HomeNav from "../components/HomeNav";
 
 function Register() {
@@ -90,7 +89,6 @@ function Register() {
 
     if (registerFormData.phoneNumber) {
       const cleanNumber = registerFormData.phoneNumber.replace(/\D/g, "");
-
       if (!registerFormData.phoneNumber) {
         errors.phoneNumber = "Le numéro de téléphone est requis.";
       }
@@ -124,19 +122,14 @@ function Register() {
 
   return (
     <div>
-      <HomeNav/>
-      <div className="bg-[#FAFBFB] min-h-screen max-w-screen py-24">
+      {/* <HomeNav /> */}
+      <div className="bg-[#FAFBFB] min-h-screen max-w-screen py-0">
         <div className="p-4 mx-auto w-full sm:w-2/3">
           <form
             onSubmit={handleSubmit}
             className="bg-white p-6 rounded-lg shadow-md"
           >
-            {/* <img
-              className=" object-scale-down h-20 w-20"
-              src={logo}
-              alt="djeezy logo"
-            /> */}
-            <div class="font-medium p-4 self-center text-center text-2xl uppercase text-gray-800">
+            <div class="font-medium p-4 py-2 self-center text-center text-2xl uppercase text-gray-800">
               Créer un compte
             </div>
             <div className="mb-4">

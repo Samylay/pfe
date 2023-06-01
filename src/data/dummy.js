@@ -26,6 +26,11 @@ export const adminLinks = [
         name: "Ajouter un utilisateur",
         icon: <FiUserPlus />,
       },
+      {
+        goto: "dashboard/adduser",
+        name: "Demandes d'inscription",
+        icon: <FiUserPlus />,
+      },
     ],
   },
   {

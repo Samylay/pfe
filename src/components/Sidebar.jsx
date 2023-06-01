@@ -4,7 +4,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { adminLinks, userLinks } from "../data/dummy";
 import logo from "../assets/djezzy.png";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import jwt_decode from "jwt-decode";
 
 function Sidebar() {
@@ -12,7 +12,7 @@ function Sidebar() {
   const [role, setRole] = useState(getRoleFromToken());
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
   const [activeLink, setActiveLink] = useState("");
-  
+
   let links = role === "ROLE_ADMIN" ? adminLinks : userLinks;
   function getRoleFromToken() {
     if (token) {
@@ -30,7 +30,7 @@ function Sidebar() {
   };
 
   const normalLink =
-    "flex items-center gap-5 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2";
+    "flex items-center gap-4 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2";
   const activeLinkClass =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-red-600";
 
@@ -40,7 +40,13 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-full md:w-72 fixed shadow-md bg-white h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto">
+    <div
+      className={
+        activeMenu
+          ? "w-full md:w-64 fixed shadow-md bg-white h-screen "
+          : "w-0"
+      }
+    >
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">

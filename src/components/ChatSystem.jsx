@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChatIcon, XIcon } from "@heroicons/react/solid";
 import { MdSend } from "react-icons/md";
 import { Transition } from "@headlessui/react";
 import logo from "../assets/thelogo.png";
-import { useLocalState } from "../util/useLocalStorage";
-
+import { useLocalState } from "../hooks/useLocalStorage";
 import userf from "../data/user.jpg";
 import jwt_decode from "jwt-decode";
 import { LocalDateTime } from "@js-joda/core";
@@ -12,30 +11,35 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
 
+class ChatMessageDto {
+  constructor(user, message, date) {
+    this.user = user;
+    this.message = message;
+    this.date = date;
+  }
+}
+
 function ChatSystem() {
   dayjs.locale("fr");
   let dates = LocalDateTime.now();
   const [token] = useLocalState("", "token");
   const webSocket = useRef(null);
 
-  const [name] = useState(getNameFromToken());
-  // const [change, setChange] = useState("chat-bubble");
+  const [name, setName] = useState("");
+
   dayjs.extend(relativeTime);
-
-  function getNameFromToken() {
-    if (token) {
-      if (token.length > 50) {
-        const decodeToken = jwt_decode(token);
-
-        return decodeToken.firstname;
-      }
-    }
-  }
 
   const [chatMessages, setChatMessages] = useState([]);
   const user = name;
   const [message, setMessage] = useState("");
   const [showChatbox, setShowChatbox] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      const decodeToken = jwt_decode(token);
+      setName(decodeToken.firstname);
+    }
+  }, [token]);
 
   useEffect(() => {
     fetch("/messages", {
@@ -66,8 +70,8 @@ function ChatSystem() {
   useEffect(() => {
     webSocket.current.onmessage = (event) => {
       const chatMessageDto = JSON.parse(event.data);
-      setChatMessages([
-        ...chatMessages,
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
         {
           sender: chatMessageDto.user,
           input: chatMessageDto.message,
@@ -75,11 +79,12 @@ function ChatSystem() {
         },
       ]);
     };
-  }, [chatMessages]);
+  }, []);
 
   const toggleChatbox = () => {
     setShowChatbox(!showChatbox);
   };
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       sendMessage();
@@ -90,18 +95,18 @@ function ChatSystem() {
     <div key={index}>
       <div>
         <div
-          className={` ${
+          className={`${
             chatMessageDto.sender === name ? "chat chat-end" : "chat chat-start"
           }`}
         >
           <div className="chat-image avatar">
             <div className="w-8 rounded-full">
-              <img src={userf} alt="user profile"/>
+              <img src={userf} alt="user profile" />
             </div>
           </div>
-          <div className="chat-header ml-3  ">{chatMessageDto.sender}</div>
+          <div className="chat-header ml-3 ">{chatMessageDto.sender}</div>
           <div
-            className={` ${
+            className={`${
               chatMessageDto.sender === name
                 ? "chat-bubble bg-red-600 text-white"
                 : "chat-bubble text-white"
@@ -109,9 +114,8 @@ function ChatSystem() {
           >
             {chatMessageDto.input}
           </div>
-
           <div className="chat-footer opacity-50 text-gray-600">
-            {dayjs(chatMessageDto.sentDate).fromNow()}
+            {dayjs(chatMessageDto.date).fromNow()}
           </div>
         </div>
       </div>
@@ -137,7 +141,6 @@ function ChatSystem() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-
         method: "POST",
         body: JSON.stringify(reqBody),
       });
@@ -154,14 +157,14 @@ function ChatSystem() {
   }, [chatMessages]);
 
   return (
-    <div className="fixed bottom-0 right-0 py-2 px-4 mb-8 z-50 ">
+    <div className="fixed bottom-0 right-0 py-2 px-4 mb-8 z-50">
       {!showChatbox && (
         <button
           className="rounded-full flex items-center gap-2 py-2 px-4 bg-red-600 text-white hover:bg-red-700 transition-colors"
           onClick={toggleChatbox}
         >
           <ChatIcon className="w-8 h-8" />
-          <span>Cliquez ici pour discuter</span>
+          <span className="hidden sm:block">Cliquez pour discuter !</span>
         </button>
       )}
       <Transition
@@ -177,7 +180,7 @@ function ChatSystem() {
         {(ref) => (
           <div
             ref={ref}
-            className="bg-white shadow-lg rounded-lg  w-96"
+            className="bg-white shadow-lg rounded-lg w-96"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-gradient-to-l from-red-700 via-red-600 to-red-500 text-white rounded-t-lg p-4 h-[70px]">
@@ -221,11 +224,3 @@ function ChatSystem() {
 }
 
 export default ChatSystem;
-
-class ChatMessageDto {
-  constructor(user, message, date) {
-    this.user = user;
-    this.message = message;
-    this.date = date;
-  }
-}

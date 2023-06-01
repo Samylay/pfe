@@ -1,55 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useLocalState } from "./util/useLocalStorage";
-import PrivateRoute from "./PrivateRoute";
+import { useLocalState } from "./hooks/useLocalStorage";
 import jwt_decode from "jwt-decode";
 
-import Login from "./pages/Login";
-import AdminDashboard from "./pages/AdminDashboard";
-import UserDashboard from "./pages/UserDashboard";
-import Contact from "./pages/Contact";
-import Support from "./pages/Support";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
+import AppRoutes from "./AppRoutes";
 
 function App() {
   const [token] = useLocalState("", "token");
-  const [role] = useState(getRoleFromToken());
+  const [role, setRole] = useState("");
 
-  function getRoleFromToken() {
+  useEffect(() => {
     if (token) {
-      if (token.length > 50) {
-        const decodeToken = jwt_decode(token);
-        return decodeToken.authorities[0].authority;
+      try {
+        const decodedToken = jwt_decode(token);
+        const userRole = decodedToken.authorities[0].authority;
+        setRole(userRole);
+      } catch (error) {
+        console.error("Error decoding token:", error);
       }
     }
-  }
+  }, [token]);
 
   return (
-    <div className="bg-white">
+    <div className=" bg-white ">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/support" element={<Support />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route
-            path="/dashboard/*"
-            element={
-              role === "ROLE_ADMIN" ? (
-                <PrivateRoute>
-                  <AdminDashboard />
-                </PrivateRoute>
-              ) : (
-                <PrivateRoute>
-                  {/* this should be the user dashboard */}
-                  <UserDashboard />
-                </PrivateRoute>
-              )
-            }
-          ></Route>
-        </Routes>
+        <AppRoutes role={role} />
       </BrowserRouter>
     </div>
   );

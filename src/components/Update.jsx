@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import request from "./../services/fetchService";
-import { useLocalState } from "./../util/useLocalStorage";
+import request from "../utils/fetchService";
+import { useLocalState } from "../hooks/useLocalStorage";
 
 const Update = () => {
   const [username, setUsername] = useState("");

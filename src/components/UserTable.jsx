@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { SearchIcon } from "@heroicons/react/solid";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import DeleteUserModal from "./DeleteUserModal";
 
 function DataTable() {
@@ -34,7 +33,6 @@ function DataTable() {
   }, [token]);
 
   const handleDeleteClick = useCallback(
-  
     (id) => {
       fetch(`/users/${id}`, {
         headers: {
@@ -74,7 +72,7 @@ function DataTable() {
       <DeleteUserModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        Delete={() => {
+        onDelete={() => {
           handleDeleteClick(selected);
           setIsModalOpen(false);
         }}

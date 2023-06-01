@@ -12,6 +12,7 @@
     "dayjs": "^1.11.7",
     "eslint-config-react-app": "^7.0.1",
     "jwt-decode": "^3.1.2",
+    "playwright": "^1.33.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
@@ -22,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,8 +45,10 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.33.0",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.9.0",
+    "jest": "^27.5.1",
     "postcss": "^8.4.6"
   }
 }

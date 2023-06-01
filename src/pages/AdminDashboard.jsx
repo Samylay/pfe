@@ -6,11 +6,13 @@ import { Route, Routes } from "react-router-dom";
 import Utilisateurs from "../components/Utilisateurs";
 import Update from "../components/Update";
 import Register from "./Register";
-import DashBoard from "../components/DashBoard";
 import Sidebar from "../components/Sidebar";
 import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "../components/ChatSystem";
 import KPI from "../components/KPI";
+import UserList from "../components/UserList";
+import DashboardCard from "../components/DashboardCard";
+import Teest from "../components/Teest";
 
 export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
@@ -26,26 +28,26 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="  w-full h-full">
+    <div className="flex w-full h-full">
       {activeMenu && <Sidebar />}
       <div
         className={
           activeMenu
-            ? "hidden md:block min-h-screen md:ml-72 w-screen max-w-full"
+            ? "hidden md:block flex-grow min-h-screen md:ml-64 w-screen max-w-full"
             : "min-h-screen w-screen max-w-full"
         }
       >
         <ChatSystem />
-        <div className="bg-[#FAFBFB]">
-          <NavBar />
-        </div>
-        <div className={isMobile ?"hidden":""}>
+        <NavBar />
+
+        <div className={isMobile ? "hidden" : ""}>
           <Routes>
             <Route
               path="/"
               element={
                 <PrivateRoute>
-                  <DashBoard />
+                  {/* <DashBoard /> */}
+                  <Teest/>
                 </PrivateRoute>
               }
             ></Route>
@@ -54,6 +56,8 @@ export default function AdminDashboard() {
               element={
                 <PrivateRoute>
                   <KPI />
+                  {/* <DashboardCard title={"test"} items={['linechart', 'piechart']} defaultRepresentation={"linechart"} availableRepresentations={null} /> */}
+                  
                 </PrivateRoute>
               }
             ></Route>
@@ -70,6 +74,14 @@ export default function AdminDashboard() {
               element={
                 <PrivateRoute>
                   <Register />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/adduser"
+              element={
+                <PrivateRoute>
+                  <UserList />
                 </PrivateRoute>
               }
             ></Route>

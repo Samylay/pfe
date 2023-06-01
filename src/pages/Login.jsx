@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import logo from "../assets/djezzy.png";
 import { FaUser, FaLock } from "react-icons/fa";
-import { useLocalState } from "../util/useLocalStorage";
+import { useLocalState } from "../hooks/useLocalStorage";
 import HomeNav from "../components/HomeNav";
 
 export default function Login() {
@@ -22,7 +21,6 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const reqBody = {
       username: loginFormData.username,
       password: loginFormData.password,
@@ -51,20 +49,11 @@ export default function Login() {
       });
   };
 
-  function GotoHome() {
-    window.location.href = "/";
-  }
-
   return (
     <div>
       <HomeNav />
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-        <div className="flex flex-col bg-white shadow-md px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md">
-          {/* <img
-            className=" object-scale-down h-20 w-20"
-            src={logo}
-            alt="djeezy logo"
-          /> */}
+        <div className="flex flex-col bg-white shadow-md px-6 md:px-8 lg:px-10 py-8 rounded-xl w-full max-w-md">
           <div class="font-medium self-center text-2xl uppercase text-gray-800 pt-4">
             Se connecter
           </div>
@@ -127,18 +116,6 @@ export default function Login() {
                   />
                 </div>
               </div>
-
-              <div className="flex items-center mb-6 -mt-4">
-                <div className="flex ml-auto">
-                  <a
-                    href="test"
-                    className="inline-flex text-base text-red-500 hover:text-red-700"
-                  >
-                    Mot de passe oublié?
-                  </a>
-                </div>
-              </div>
-
               <div class="flex w-full">
                 <button
                   type="submit"
@@ -160,10 +137,26 @@ export default function Login() {
                   </span>
                 </button>
               </div>
+
+              <div className="relative ml-2 mt-1">
+                <div className="flex ml-auto">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.location.href = "/forgotpassword";
+                    }}
+                    className="inline-flex text-base text-red-500 hover:text-red-700"
+                  >
+                    Mot de passe oublié?
+                  </button>
+                </div>
+              </div>
             </form>
 
             <button
-              onClick={GotoHome}
+              onClick={() => {
+                window.location.href = "/";
+              }}
               type="submit"
               className="flex items-center justify-center focus:outline-none mt-4 border-2 border-red-600 rounded-full text-red-700 text-base bg-white hover:text-white hover:bg-red-700 py-2 w-full transition duration-150 ease-in"
             >
