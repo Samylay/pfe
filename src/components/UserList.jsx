@@ -144,7 +144,7 @@ const UserList = () => {
 
   // can add multiple selections (antd docs)
   return (
-    <div className="flex-grow  table-fixed">
+    <div className="flex-grow table-fixed">
       <Table dataSource={dataSource}>
         <Column
           title="Nom d'utilisateur"

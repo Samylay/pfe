@@ -63,12 +63,12 @@ function Sidebar() {
                 <p className="text-gray-500 m-3 my-4 uppercase">{item.title}</p>
                 {item.links.map((link) => (
                   <NavLink
-                    className="flex items-center gap-4 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2"
+                    className="flex items-center gap-3 pl-4 py-3 m-2 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white"
                     to={`/${link.goto}`}
                     key={link.name}
                   >
                     {link.icon}
-                    <span className="capitalize">{link.name}</span>
+                    <button className="capitalize">{link.name}</button>
                   </NavLink>
                 ))}
               </div>

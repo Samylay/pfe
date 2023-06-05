@@ -41,15 +41,14 @@ const Teest = () => {
 
   return (
     <div>
-      <div className=" p-2 md:p-10 bg-[#FAFBFB]  rounded-3xl">
-        <p className="text-3xl font-extrabold tracking-tight text-slate-900 mb-5">
+      <div className="p-2 md:p-6 bg-[#FAFBFB]  rounded-3xl">
+        <p className="text-3xl font-extrabold tracking-tight text-slate-900 mb-4">
           Resumé du mois de mars
         </p>
       </div>
-
-      <div className="   flex flex-col gap-4 px-4 sm:px-8 lg:px-16 xl:px-20 w-full  ">
+      <div className="flex flex-col gap-4 px-4 sm:px-6 lg:px-10 w-full  ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ">
-    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+          <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
             <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
               <RiSurveyLine className="text-2xl text-white" />
             </div>
@@ -64,7 +63,7 @@ const Teest = () => {
               </div>
             </div>
           </div>
-    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+          <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
             <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
               <BsFillClipboardCheckFill className="text-2xl text-white" />
             </div>
@@ -79,7 +78,7 @@ const Teest = () => {
               </div>
             </div>
           </div>
-    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+          <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
             <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
               <GiClick className="text-2xl text-white" />
             </div>
@@ -94,7 +93,7 @@ const Teest = () => {
               </div>
             </div>
           </div>
-    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+          <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
             <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
               <FaCoins className="text-2xl text-white" />
             </div>
@@ -110,7 +109,6 @@ const Teest = () => {
             </div>
           </div>
         </div>
-
         <div className="   h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex gap-10 ">
           <ResponsiveContainer width="88%" height="120%">
             <LineChart data={dataLine}>
@@ -146,4 +144,3 @@ const Teest = () => {
 };
 
 export default Teest;
-

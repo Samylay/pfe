@@ -38,7 +38,6 @@ export default function AdminDashboard() {
       >
         <ChatSystem />
         <NavBar />
-
         <div className={isMobile ? "hidden" : ""}>
           <Routes>
             <Route
@@ -54,7 +53,6 @@ export default function AdminDashboard() {
               element={
                 <PrivateRoute>
                   <KPI />
-                  {/* <DashboardCard title={"test"} items={['linechart', 'piechart']} defaultRepresentation={"linechart"} availableRepresentations={null} /> */}
                 </PrivateRoute>
               }
             ></Route>

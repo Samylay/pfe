@@ -52,7 +52,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <div
+      <button
         className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
         onClick={handleModalOpen}
       >
@@ -67,7 +67,7 @@ const UserProfile = () => {
           {name}
         </Title>
         <MdOutlineKeyboardArrowDown />
-      </div>
+      </button>
       <Modal
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}

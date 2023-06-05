@@ -3,13 +3,14 @@ import { useStateContext } from "../contexts/ContextProvider";
 import NavBar from "../components/NavBar";
 import { Route, Routes } from "react-router-dom";
 
-import DashBoard from "../components/DashBoard";
+import Utilisateurs from "../components/Utilisateurs";
 import Sidebar from "../components/Sidebar";
 import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "../components/ChatSystem";
 import KPI from "../components/KPI";
+import DashBoard from "../components/DashBoard";
 
-export default function UserDashboard() {
+export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -23,20 +24,19 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="  w-full h-full">
+    <div className="flex w-full h-full">
       {activeMenu && <Sidebar />}
       <div
         className={
           activeMenu
-            ? "min-h-screen md:ml-72 w-screen max-w-full"
+            ? "hidden md:block flex-grow min-h-screen md:ml-64 w-screen max-w-full"
             : "min-h-screen w-screen max-w-full"
         }
       >
         <ChatSystem />
-        <div className="bg-[#FAFBFB]">
-          <NavBar />
-        </div>
-        <div className={isMobile ? "" : ""}>
+        <NavBar />
+
+        <div className={isMobile ? "hidden" : ""}>
           <Routes>
             <Route
               path="/"
@@ -47,10 +47,18 @@ export default function UserDashboard() {
               }
             ></Route>
             <Route
-              path="/kpi"
+              path="/Kpi"
               element={
                 <PrivateRoute>
                   <KPI />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/users"
+              element={
+                <PrivateRoute>
+                  <Utilisateurs />
                 </PrivateRoute>
               }
             ></Route>
