@@ -1,123 +1,149 @@
-import React from "react";
+import React, { useState } from "react";
+import { RiSurveyLine } from "react-icons/ri";
+import { BsFillClipboardCheckFill } from "react-icons/bs";
+import { GiClick } from "react-icons/gi";
+import { FaCoins } from "react-icons/fa";
 
 import {
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  LineChart,
-  Line,
   ResponsiveContainer,
 } from "recharts";
-import { Table, Card } from "antd";
 
-const dataLine = [
-  { name: "A", value: 400 },
-  { name: "B", value: 300 },
-  { name: "C", value: 200 },
-  { name: "D", value: 100 },
-];
+const Teest = () => {
+  const dataLine = [
+    {
+      name: "1-8",
+      surveySent: 10000,
+      surveyCompleted: 2500,
+    },
+    {
+      name: "8-15",
+      surveySent: 12000,
+      surveyCompleted: 2800,
+    },
+    {
+      name: "15-23",
+      surveySent: 7800,
+      surveyCompleted: 200,
+    },
+    {
+      name: "23-31",
+      surveySent: 3500,
+      surveyCompleted: 30,
+    },
+  ];
 
-const dataTop5 = [
-  { name: "Product A", value: 5000 },
-  { name: "Product B", value: 4000 },
-  { name: "Product C", value: 3000 },
-  { name: "Product D", value: 2000 },
-  { name: "Product E", value: 1000 },
-];
-const columns = [
-  {
-    title: "name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "name",
-    dataIndex: "value",
-    key: "name",
-  },
-];
-
-const dataCards = [
-  { title: "Sales", value: 250, increase: -10 },
-  { title: "Revenue", value: 5000, increase: 5 },
-  { title: "Customers", value: 1000, increase: 20 },
-  { title: "Orders", value: 200, increase: 15 },
-];
-
-export default function Dashboard() {
   return (
-    <div className="flex flex-1 bg-gray-100 min-h-screen w-full">
-      <div className="flex-1 max-w-7xl w-full mx-auto my-6 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Dashboard</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-4">
-          {/* Display 4 cards with increased percentages */}
-          {dataCards.map((card) => (
-            <Card
-              className="rounded-md m-2"
-              key={card.title}
-              title={card.title}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-4xl font-bold text-gray-800">
-                  {card.value}
-                </div>
-                <div className="flex items-center">
-                  <div
-                    className={`text-sm font-bold rounded-full px-2 py-1 ${
-                      card.increase > 0 ? "bg-green-500" : "bg-red-500"
-                    } text-white`}
-                  >
-                    {card.increase > 0 ? "+" : ""}
-                    {card.increase}%
-                  </div>
-                </div>
-              </div>
-              <div className="relative w-full h-2 bg-gray-300 rounded-full">
-                <div
-                  className={`absolute top-0 left-0 h-2 rounded-full ${
-                    card.increase > 0 ? "bg-green-500" : "bg-red-500"
-                  }`}
-                  style={{ width: `${Math.abs(card.increase)}%` }}
-                ></div>
-              </div>
-            </Card>
-          ))}
-        </div>
-        <div className="flex flex-wrap flex-grow  m-2 my-4">
-          {/* Display 3 instances of the LineChart */}
-          {/* WRAP THE CHARTS IN A TOGGLEABLE LIST THAT DISPLAYS ONE GRAPH AT AT TIME FOR THE ENTIRE WIDTH */}
-          {[...Array(2)].map((_, index) => (
-            <div className="bg-white rounded-md p-6" key={index}>
-              <h3 className="text-lg font-bold text-gray-800 mb-4">
-                Line Chart
-              </h3>
-              <div className="relative w-full h-ful flex flex-grow">
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={dataLine}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" />
-                  </LineChart>
-                </ResponsiveContainer>
+    <div>
+      <div className=" p-2 md:p-10 bg-[#FAFBFB]  rounded-3xl">
+        <p className="text-3xl font-extrabold tracking-tight text-slate-900 mb-5">
+          Resumé du mois de mars
+        </p>
+      </div>
+
+      <div className="   flex flex-col gap-4 px-4 sm:px-8 lg:px-16 xl:px-20 w-full  ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ">
+    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+            <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
+              <RiSurveyLine className="text-2xl text-white" />
+            </div>
+            <div className="pl-4">
+              <span className="text-sm text-gray-500 font-light">
+                Questionnaires envoyés
+              </span>
+              <div className="flex items-center">
+                <strong className="text-xl text-gray-700 font-semibold">
+                  15000
+                </strong>
               </div>
             </div>
-          ))}
-        </div>
-        {/* Display a top 5 list of random data */}
-        <div className="bg-white rounded-md p-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Top 5 List</h3>
-          <div className="relative w-full h-full">
-            <div>
-              <Table columns={columns} dataSource={dataTop5} />
+          </div>
+    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+            <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
+              <BsFillClipboardCheckFill className="text-2xl text-white" />
             </div>
+            <div className="pl-4">
+              <span className="text-sm text-gray-500 font-light">
+                Questionnaires complétés
+              </span>
+              <div className="flex items-center">
+                <strong className="text-xl text-gray-700 font-semibold">
+                  15000
+                </strong>
+              </div>
+            </div>
+          </div>
+    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+            <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
+              <GiClick className="text-2xl text-white" />
+            </div>
+            <div className="pl-4">
+              <span className="text-sm text-gray-500 font-light">
+                Souscriptions aux offres
+              </span>
+              <div className="flex items-center">
+                <strong className="text-xl text-gray-700 font-semibold">
+                  15000
+                </strong>
+              </div>
+            </div>
+          </div>
+    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center ">
+            <div className="rounded-full h-12 w-12 flex items-center justify-center bg-red-600">
+              <FaCoins className="text-2xl text-white" />
+            </div>
+            <div className="pl-4">
+              <span className="text-sm text-gray-500 font-light">
+                Clients ayant atteint 0 de crédit
+              </span>
+              <div className="flex items-center">
+                <strong className="text-xl text-gray-700 font-semibold">
+                  15000
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="   h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex gap-10 ">
+          <ResponsiveContainer width="88%" height="120%">
+            <LineChart data={dataLine}>
+              <CartesianGrid strokeDasharray="3 3 0 0" vertical={false} />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line dataKey="surveySent" stroke="#d62448" />
+              <Line dataKey="surveyCompleted" stroke="#8884d8" />
+            </LineChart>
+          </ResponsiveContainer>
+          <div className="w-full ml-24">
+            <ResponsiveContainer width="88%" height="120%">
+              <LineChart data={dataLine}>
+                <CartesianGrid strokeDasharray="3 3 0 0" vertical={false} />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="surveyCompleted"
+                  stroke="#8884d8"
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Teest;
+

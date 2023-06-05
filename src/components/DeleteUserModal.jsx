@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { TrashIcon, XIcon } from "@heroicons/react/outline";
 
-function DeleteUserModal({ isOpen, onClose, onDelete}) {
+function DeleteUserModal({ isOpen, onClose, onDelete }) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleDelete = async () => {

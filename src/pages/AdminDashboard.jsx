@@ -11,8 +11,7 @@ import PrivateRoute from "../PrivateRoute";
 import ChatSystem from "../components/ChatSystem";
 import KPI from "../components/KPI";
 import UserList from "../components/UserList";
-import DashboardCard from "../components/DashboardCard";
-import Teest from "../components/Teest";
+import DashBoard from "../components/DashBoard";
 
 export default function AdminDashboard() {
   const { activeMenu } = useStateContext();
@@ -46,8 +45,7 @@ export default function AdminDashboard() {
               path="/"
               element={
                 <PrivateRoute>
-                  {/* <DashBoard /> */}
-                  <Teest/>
+                  <DashBoard />
                 </PrivateRoute>
               }
             ></Route>
@@ -57,7 +55,6 @@ export default function AdminDashboard() {
                 <PrivateRoute>
                   <KPI />
                   {/* <DashboardCard title={"test"} items={['linechart', 'piechart']} defaultRepresentation={"linechart"} availableRepresentations={null} /> */}
-                  
                 </PrivateRoute>
               }
             ></Route>

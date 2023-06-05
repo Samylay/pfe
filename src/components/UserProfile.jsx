@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Avatar, Typography, Button } from "antd";
+import { Modal, Avatar, Typography } from "antd";
 
 import user from "../data/user.jpg";
 import jwt_decode from "jwt-decode";
@@ -51,7 +51,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="bg-red-400">
+    <div>
       <div
         className="flex flex-row items-center pt-4 gap-2 cursor-pointer p-2 hover:bg-light-gray text-gray-800 rounded-lg"
         onClick={handleModalOpen}

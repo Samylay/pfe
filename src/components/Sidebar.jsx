@@ -11,7 +11,6 @@ function Sidebar() {
   const [token, setToken] = useLocalState("", "token");
   const [role, setRole] = useState(getRoleFromToken());
   const { activeMenu, setActiveMenu, screenSize } = useStateContext();
-  const [activeLink, setActiveLink] = useState("");
 
   let links = role === "ROLE_ADMIN" ? adminLinks : userLinks;
   function getRoleFromToken() {
@@ -29,22 +28,10 @@ function Sidebar() {
     }
   };
 
-  const normalLink =
-    "flex items-center gap-4 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2";
-  const activeLinkClass =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-red-600";
-
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-    handleCloseSideBar();
-  };
-
   return (
     <div
       className={
-        activeMenu
-          ? "w-full md:w-64 fixed shadow-md bg-white h-screen "
-          : "w-0"
+        activeMenu ? "w-full md:w-60 fixed shadow-md bg-white h-screen " : "w-0"
       }
     >
       {activeMenu && (
@@ -53,7 +40,7 @@ function Sidebar() {
             <Link
               to="/"
               onClick={handleCloseSideBar}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-bold tracking-tight text-slate-900"
+              className="items-center gap-3 ml-2 mt-4 flex text-xl font-bold tracking-tight text-slate-900"
             >
               <img
                 className="h-12 w-12 mr-4 ml-2"
@@ -76,12 +63,9 @@ function Sidebar() {
                 <p className="text-gray-500 m-3 my-4 uppercase">{item.title}</p>
                 {item.links.map((link) => (
                   <NavLink
-                    className={
-                      link === activeLink ? activeLinkClass : normalLink
-                    }
+                    className="flex items-center gap-4 pl-6 py-3 rounded-lg text-md text-gray-800 dark:hover:text-black hover:bg-red-300 hover:text-white m-2"
                     to={`/${link.goto}`}
                     key={link.name}
-                    onClick={(link) => handleLinkClick(link)}
                   >
                     {link.icon}
                     <span className="capitalize">{link.name}</span>
